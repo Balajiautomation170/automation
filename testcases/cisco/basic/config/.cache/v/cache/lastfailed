@@ -1,1 +1,3 @@
-{}
+{
+  "cisco_cfg.py::Test_login_to_devices": true
+}

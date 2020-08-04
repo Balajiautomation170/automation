@@ -1,7 +1,7 @@
 import re
 import time
 import paramiko
-from home.python_test.python_network.automation.library.cisco.basic.config.cfg_output.lib_cisco_login_output import Routerssh
+from  library.cisco.basic.config.lib_cisco_login import Routerssh
 
 
 class Routerssh_output():

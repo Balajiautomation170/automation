@@ -1,6 +1,7 @@
 import re
 import time
 import paramiko
+import json
 
 
 class Routerssh():
@@ -23,3 +24,6 @@ class Routerssh():
         output = ssh_stdout.readlines()
         return output
 
+
+if __name__ == "__main__":
+    print("hi")
