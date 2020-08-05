@@ -1,9 +1,12 @@
-import paramiko
 import sys
 import os
 import pytest
 import json
+import logging
+import time
 from library.cisco.basic.cfg_output.lib_cisco_login_output import Routerssh_output
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 class Test_login_to_devices():
@@ -13,52 +16,69 @@ class Test_login_to_devices():
         """
         Set the variables at global
         """
+        request.cls.logger = logging.getLogger()
         request.cls.comm_path = ""
         request.cls.feat_path = ""
-        request.cls.comm_path = sys.path[3] + "/testcases/cisco/input_data/common_input.json"
-        request.cls.feat_path = sys.path[3] + "/testcases/cisco/input_data/feature_input.json"
+        request.cls.comm_path = sys.path[1] + "/testcases/cisco/input_data/common_input.json"
+        request.cls.feat_path = sys.path[1] + "/testcases/cisco/input_data/feature_input.json"
         request.cls.common_input_js = open(request.cls.comm_path, "r")
         request.cls.feature_input_js = open(request.cls.feat_path, "r")
         request.cls.common_input_dict = request.cls.common_input_js.read()
         request.cls.common_input = json.loads(request.cls.common_input_dict)
         request.cls.feature_input_dict = request.cls.feature_input_js.read()
         request.cls.feature_input = json.loads(request.cls.feature_input_dict)
-        request.cls.device_mac = []
-        request.cls.device_ip = []
-        request.cls.device_user = []
-        request.cls.device_pwd = []
         request.cls.all_devices = request.cls.common_input["cisco_devices"]["login_details"]
-        for det in request.cls.common_input["cisco_devices"]["login_details"]:
-            mac = det["device_mac"]
-            ip = det["device_ip"]
-            usr = det["device_user"]
-            pwd = det["device_pwd"]
-            request.cls.device_mac.append(mac)
-            request.cls.device_ip.append(ip)
-            request.cls.device_user.append(usr)
-            request.cls.device_pwd.append(pwd)
-        #
+        request.cls.feature_config = request.cls.feature_input["group_configuration"]
+        request.cls.feature_show = request.cls.feature_input["show_commands"]
+        request.cls.cli_out = Routerssh_output()
 
     def test001_ssh_login_show_ouput(self):
-#         router_ip = str(self.device_ip[0])
-#         router_username = str(self.device_user[0])
-#         router_password = str(self.device_pwd[0])
-
+        """
+        Devices : login into all show version ,show ip int
+        """
         for det in self.all_devices:
-            host = det["device_host"]
-            mac = det["device_mac"]
-            ip = det["device_ip"]
-            usr = det["device_user"]
-            pwd = det["device_pwd"]
-            print ("#### Logged into device {}###".format(host))
-            ssh = paramiko.SSHClient()
-            ssh.load_system_host_keys()
-            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(ip, username=usr, password=pwd, look_for_keys=False)
-            # Run command.
-            ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("show ip route")
-            output = ssh_stdout.readlines()
-            print (output)
-            # Close connection.
-            ssh.close()
-            print ("#### Logged out from device {}###".format(host))
+            self.cli_out.ssh_login_show_ouput(det, self.feature_show[0])
+
+    def test002_configure_interface(self):
+        """
+        Devices : login into all show version ,show ip int
+        """
+        for det in self.all_devices:
+            host_cfg = det["host"]
+            self.cli_out.config_interface_out(det, self.feature_config[host_cfg])
+
+    def test003_enable_check_rip(self):
+        """
+        Devices : login into all show version ,show ip int
+        """
+        for det in self.all_devices:
+            host_cfg = det["host"]
+            self.cli_out.enable_rip_out(det, self.feature_config[host_cfg])
+        time.sleep(15)
+        for det in self.all_devices:
+            host_cfg = det["host"]
+            self.cli_out.check_rip_database_out(det, self.feature_config[host_cfg])
+            self.cli_out.check_ip_route_out(det, self.feature_config[host_cfg])
+            self.cli_out.check_ping_out(det, self.feature_config[host_cfg])
+
+    def test004_disable_interface(self):
+        """
+        Devices : login into all show version ,show ip int
+        """
+        for det in self.all_devices:
+            host_cfg = det["host"]
+            self.cli_out.disable_interface_out(det, self.feature_config[host_cfg])
+
+    def test005_disable_check_rip(self):
+        """
+        
+        Devices : Disable router rip
+        """
+        for det in self.all_devices:
+            host_cfg = det["host"]
+            self.cli_out.disable_rip_out(det, self.feature_config[host_cfg])
+        time.sleep(5)
+        for det in self.all_devices:
+            host_cfg = det["host"]
+            self.cli_out.check_ip_route_out_non_exist(det, self.feature_config[host_cfg])
+            self.cli_out.check_ping_out_non_exist(det, self.feature_config[host_cfg])

@@ -1,32 +1,29 @@
 {
   "cisco_devices": {
-    "login_details" : [{
-    	"device_mac": "01:01",
-    	"device_host": "R4",
-    	"device_ip": "10.1.1.1",
-    	"device_user": "cisco",
-    	"device_pwd": "cisco"  	
+    "login_details" : [
+	    {
+    	"device_type": "cisco_ios",
+    	"ip" : "10.1.1.2",
+    	"username": "cisco",
+    	"password": "cisco",
+    	"secret" : "cisco",
+    	"host": "R1"
 	    },
 	    {
-    	"device_mac": "01:02",
-    	"device_host": "R1",
-    	"device_ip": "10.1.1.2",
-    	"device_user": "cisco",
-    	"device_pwd": "cisco"  		
+    	"device_type": "cisco_ios",
+    	"ip" : "10.1.1.3",
+    	"username": "cisco",
+    	"password": "cisco",
+    	"secret" : "cisco",
+    	"host": "R2"
 	    },
 	    {
-    	"device_mac": "01:03",
-    	"device_host": "R2",
-    	"device_ip": "10.1.1.3",
-    	"device_user": "cisco",
-    	"device_pwd": "cisco"  	
-	    },
-	    {
-    	"device_mac": "01:04",
-     	"device_host": "R3",
-    	"device_ip": "10.1.1.4",
-    	"device_user": "cisco",
-    	"device_pwd": "cisco"  	
+    	"device_type": "cisco_ios",
+    	"ip" : "10.1.1.4",
+    	"username": "cisco",
+    	"password": "cisco",
+    	"secret" : "cisco",
+    	"host": "R3" 	
 	    }
 	    ]
 	}

@@ -1,737 +1,113 @@
 {
   "group_configuration": {
     "R1": {
-      "name": "branch4_regression",
-      "admin_password": "Aruba123",
-      "persona": "BG",
-      "static_ip" : [
-        "99.99.99.99/32",
-        "66.66.66.66/32"
-      ],
-      "connected_ip" : [
-        "100.100.140.1/32"
-      ],
-       "static_ip_s2s" : [
-        "101.1.97.1/32",
-        "101.2.97.1/32"
-      ],
-      "static_ip_gre" : [
-        "102.1.97.1/32",
-        "102.2.97.1/32"
-      ],
-      "default_routes" : [
-        "0.0.0.0/0"
-      ],
-      "hub_aggregates": [
-        "25.1.1.0/24",
-        "27.1.1.0/24"
-      ],
-      "static_ip_peer" : [
-        "88.88.88.88/32",
-        "77.77.77.77/32"
-      ],
-      "static_vpnc_routes" : [
-        "23.23.1.0/24",
-        "23.23.2.0/24",
-        "23.23.3.0/24",
-        "23.23.4.0/24",
-        "23.23.5.0/24",
-        "26.26.1.0/24",
-        "26.26.2.0/24",
-        "26.26.3.0/24",
-        "26.26.4.0/24",
-        "26.26.5.0/24"               
-      ],
-      "vpnc_connected_routes" : [
-        "200.200.200.2/32",
-        "4.4.4.1/32"              
-      ],      
-      "static_check_leaks" : [
-        "88.88.88.88/32",
-        "77.77.77.77/32"
-      ],
-      "aggregate_routes_peer_vpnc" : [
-        "88.88.0.0/24",
-        "77.77.0.0/24"
-      ],
-      "system_ip_addresses_all":[
-        "100.100.140.1/32",
-        "200.200.200.2/32"
-              ],
-      "config": {
-        "Interfaces": {
-          "Gateway Pool": [
-            {
-              "pool-name": "system_pool",
-              "startip": "100.100.140.1",
-              "endip": "100.100.140.254",
-              "default_data": true
-            }
-          ],
-          "VLANs": [
-            {
-              "name": "system",
-              "id": "2",
-              "ip assignment": "Gateway Pool",
-             "pool-name": "system_pool",
-              "Gateway Pool": 0,
-              "default_data": true
-            },
-            {
-              "name": "uplink1",
-              "id": "4094",
-              "ip assignment": "Dhcp",
-              "default_data": true
-            }
-          ],
-          "Ports": {
-            "ports": "0-1",
-            "config": [
-              {
-                "id": 0,
-                "vlan": 4094,
-                "type": "wan"
-              },
-              {
-                "id": 1,
-                "vlan": 4093,
-                "type": "wan",
-                "admin_status": true
-              }
-            ]
-          }
-        },
-        "connected_vlans": {
-          "vlans": "2,20"
-        },
-        "default_routes": [
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 1
-              },
-              "forw_setting": "null_interface",
-              "destip": "0.0.0.0",
-              "destmask": "0.0.0.0",
-              "zero": "0"
-            }
-        ],
-        "WAN": {
-          "Uplink": [
-            {
-              "default_data": true,
-              "uplink_id": 4094,
-              "uplink_type": "INET",
-              "uplink_name": "uplink1_inet"
-
-            },
-            {
-              "default_data": true,
-              "uplink_id": 4093,
-              "uplink_type": "MPLS",
-              "uplink_name": "uplink1_mpls"
-            }
-          ],
-          "Routes": [
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 1
-              },
-              "forw_setting": "null_interface",
-              "destip": "99.99.99.99",
-              "destmask": "255.255.255.255",
-              "zero": "0"
-            },
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 1
-              },
-              "forw_setting": "null_interface",
-              "destip": "66.66.66.66",
-              "destmask": "255.255.255.255",
-              "zero": "0"
-            }
-          ],
-          "Routes_nexthop": [
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 1
-              },
-              "forw_setting": "forward_route_addr",
-              "destip": "99.99.99.99",
-              "destmask": "255.255.255.255",
-              "nexthop": "1.1.1.1"
-            },
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 1
-              },
-              "forw_setting": "forward_route_addr",
-              "destip": "66.66.66.66",
-              "destmask": "255.255.255.255",
-              "nexthop": "1.1.1.1"
-            }
-          ],          
-          "Routes_s2s": [
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 0
-              },
-              "forw_setting": "site_to_site_ipsec",
-              "destip": "101.1.97.1",
-              "destmask": "255.255.255.255",
-              "zero": "0"
-            },
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 1
-              },
-              "forw_setting": "site_to_site_ipsec",
-              "destip": "101.2.97.1",
-              "destmask": "255.255.255.255",
-              "zero": "0"
-            }
-          ],
-          "Routes_gre": [
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 0
-              },
-              "forw_setting": "ipsec_tunnel_vpnc",
-              "destip": "102.1.97.1",
-              "destmask": "255.255.255.255",
-              "zero": "0"
-            },
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 1
-              },
-              "forw_setting": "ipsec_tunnel_vpnc",
-              "destip": "102.2.97.1",
-              "destmask": "255.255.255.255",
-              "zero": "0"
-            }
-          ],
-          "system_routes": [
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 1
-              },
-              "forw_setting": "null_interface",
-              "destip": "99.99.99.99",
-              "destmask": "255.255.255.252",
-              "zero": "0"
-            }
-          ],
-          "System": {
-            "VLAN": "2"
-          },
-          "system_ip": [
-          "100.100.140.1/32"
-        ],
-        "peer_system_ip": [
-        "200.200.200.2/32"
-        ],
-          "Site_health": [
-            {
-              "connectivity_status": 1,
-              "dev_down": 0,
-              "dev_type": "SPOKE",
-              "dev_up": 1,
-              "site": "B-chennai",
-              "site_avail": 100,
-              "tunnel_status": 1
-            }
-          ]
-        },
-        "bgp_data": {
-          "default_data": true,
-          "enable_bgp": true,
-          "neighbor_data": true,
-          "local_as": 65000,
-          "remote_as": 54912,
-          "rtr_id": "1.1.1.1",
-          "neighbor_ip": "21.21.21.1",
-          "pass_phrase": "aruba123"
-        }
-      }
+    	"interfaces" :[
+    	{
+    	"name" : "lo1",
+		"ip_address": "50.1.1.1",
+		"net_mask" : "255.255.255.0"
+		},
+    	{
+    	"name" : "Ethernet1/0",
+		"ip_address": "192.168.1.1",
+		"net_mask" : "255.255.255.0"
+		}
+	],
+    	"router_rip" :[
+    	{
+		"network": [
+		"50.1.1.0",
+		"192.168.1.0"
+		],
+		"peer_network":[
+		"51.1.1.0",
+		"52.1.1.0",
+		"192.168.2.0"
+		],
+		"peer_ip_ping":[
+		"51.1.1.1",
+		"52.1.1.1",
+		"192.168.2.1",
+		"192.168.2.2"
+		]
+		}
+	]		
     },
-     "R2": {
-      "name": "branch2_regression",
-      "admin_password": "Aruba123",
-      "persona": "BG",
-      "system_vlan" : 10,
-      "static_ip" : [
-        "44.44.44.44/32",
-        "55.55.55.55/32"
-      ],
-      "static_ip_peer" : [
-        "99.99.99.99/32",
-        "66.66.66.66/32"
-      ],
-      "config": {
-        "Interfaces": {
-          "Gateway Pool": [
-            {
-              "pool-name": "system_pool",
-              "startip": "100.100.120.1",
-              "endip": "100.100.120.255",
-              "default_data": true
-            }
-          ],
-          "VLANs": [
-            {
-              "name": "system",
-              "id": "10",
-              "ip assignment": "Gateway Pool",
-             "pool-name": "system_pool",
-              "Gateway Pool": 0,
-              "default_data": true
-            },
-            {
-              "name": "system",
-              "id": "2",
-              "ip assignment": "Static",
-              "pool-name": "",
-              "Gateway Pool": 0,
-              "default_data": true
-            },
-            {
-              "name": "uplink1",
-              "id": "4094",
-              "ip assignment": "Dhcp",
-              "default_data": true
-            }
-          ],
-          "Ports": {
-            "ports": "0-1",
-            "config": [
-              {
-                "id": 0,
-                "vlan": 4094,
-                "type": "wan"
-              },
-              {
-                "id": 1,
-                "vlan": 2,
-                "type": "lan"
-              }
-            ]
-          }
-        },
-        "connected_vlans": {
-          "vlans": "2,20"
-        },
-        "WAN": {
-          "Uplink": [
-            {
-              "default_data": true,
-              "uplink_id": 4094,
-              "uplink_type": "INET",
-              "uplink_name": "uplink1_inet"
-
-            },
-            {
-              "default_data": true,
-              "uplink_id": 4093,
-              "uplink_type": "MPLS",
-              "uplink_name": "uplink1_mpls"
-
-            }            
-          ],
-          "Routes": [
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 0
-              },
-              "forw_setting": "null_interface",
-              "destip": "44.44.44.44",
-              "destmask": "255.255.255.255",
-              "zero": "0"
-            },
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 1
-              },
-              "forw_setting": "null_interface",
-              "destip": "55.55.55.55",
-              "destmask": "255.255.255.255",
-              "zero": "0"
-            }
-          ],
-          "Routes_nexthop": [
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 1
-              },
-              "forw_setting": "forward_route_addr",
-              "destip": "44.44.44.44",
-              "destmask": "255.255.255.255",
-              "nexthop": "1.1.1.1"
-            },
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 1
-              },
-              "forw_setting": "forward_route_addr",
-              "destip": "55.55.55.55",
-              "destmask": "255.255.255.255",
-              "nexthop": "1.1.1.1"
-             }
-           ],
-          "System": {
-            "VLAN": "111"
-          },
-          "Site_health": [
-            {
-              "connectivity_status": 1,
-              "dev_down": 0,
-              "dev_type": "SPOKE",
-              "dev_up": 1,
-              "site": "site1",
-              "site_avail": 100,
-              "tunnel_status": 1
-            }
-          ]
-        }
-      }
+    "R2": {
+    	"interfaces" :[
+     	{
+    	"name" : "lo1",
+		"ip_address": "51.1.1.1",
+		"net_mask" : "255.255.255.0"
+		},
+    	{
+    	"name" : "Ethernet1/0",
+		"ip_address": "192.168.1.2",
+		"net_mask" : "255.255.255.0"
+		},
+    	{
+    	"name" : "Ethernet1/1",
+		"ip_address": "192.168.2.1",
+		"net_mask" : "255.255.255.0"
+		}
+	],
+		"router_rip" :[
+    	{
+		"network": [
+		"51.1.1.0",
+		"192.168.1.0",
+		"192.168.2.0"
+		],
+		"peer_network":[
+		"50.1.1.0",
+		"52.1.1.0"	
+		],
+		"peer_ip_ping":[
+		"50.1.1.1",
+		"52.1.1.1"
+		]
+		}
+	]	
     },
     "R3": {
-      "name": "branch5_regression",
-      "admin_password": "Aruba123",
-      "persona": "BG",
-      "static_ip" : [
-        "88.88.88.88/32",
-        "77.77.77.77/32"
-      ],
-      "hub_aggregates": [
-      "26.1.1.0/24",
-       "28.1.1.0/24"
-     ],
-      "static_ip_peer" : [
-        "99.99.99.99/32",
-        "66.66.66.66/32"
-      ],
-      "static_check_leaks" : [
-        "99.99.99.99/32",
-        "66.66.66.66/32"
-      ],
-      "aggregate_routes_peer_vpnc" : [
-        "99.99.99.0/24",
-        "66.66.66.0/24"
-      ],
-      "config": {
-        "Interfaces": {
-          "Gateway Pool": [
-            {
-              "pool-name": "system_pool",
-              "startip": "100.100.150.1",
-              "endip": "100.100.150.254",
-              "default_data": true
-            }
-          ],
-          "VLANs": [
-            {
-              "name": "system",
-              "id": "10",
-              "ip assignment": "Gateway Pool",
-             "pool-name": "bg2-ips",
-              "Gateway Pool": 0,
-              "default_data": true
-            },
-            {
-              "name": "system",
-              "id": "20",
-              "ip assignment": "Static",
-              "pool-name": "",
-              "Gateway Pool": 0,
-              "default_data": true
-            },
-            {
-              "name": "uplink1",
-              "id": "4094",
-              "ip assignment": "Dhcp",
-              "default_data": true
-            }
-          ],
-          "Ports": {
-            "ports": "0-1",
-            "config": [
-              {
-                "id": 0,
-                "vlan": 4094,
-                "type": "wan"
-              },
-              {
-                "id": 1,
-                "vlan": 20,
-                "type": "lan"
-              }
-            ]
-          }
-        },
-        "connected_vlans": {
-          "vlans": "2,20"
-        },
-        "WAN": {
-          "Uplink": [
-            {
-              "default_data": true,
-              "uplink_id": 4094,
-              "uplink_type": "INET",
-              "uplink_name": "uplink1_inet"
-
-            }
-          ],
-          "Routes": [
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 0
-              },
-              "forw_setting": "null_interface",
-              "destip": "88.88.88.88",
-              "destmask": "255.255.255.255",
-              "zero": "0"
-            },
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 1
-              },
-              "forw_setting": "null_interface",
-              "destip": "77.77.77.77",
-              "destmask": "255.255.255.255",
-              "zero": "0"
-            }
-          ],
-          "Routes_nexthop": [
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 1
-              },
-              "forw_setting": "forward_route_addr",
-              "destip": "88.88.88.88",
-              "destmask": "255.255.255.255",
-              "nexthop": "1.1.1.1"
-            },
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 1
-              },
-              "forw_setting": "forward_route_addr",
-              "destip": "77.77.77.77",
-              "destmask": "255.255.255.255",
-              "nexthop": "1.1.1.1"
-             }
-           ],  
-          "System": {
-            "VLAN": "111"
-          },
-          "Site_health": [
-            {
-              "connectivity_status": 1,
-              "dev_down": 0,
-              "dev_type": "SPOKE",
-              "dev_up": 1,
-              "site": "site1",
-              "site_avail": 100,
-              "tunnel_status": 1
-            }
-          ]
-        }
-      }
-    },
-    "R4": {
-      "name": "dc1_regression",
-      "admin_password": "Aruba123",
-      "persona": "vpnc",
-      "system_vlan" : 900,
-      "static_ip" : [
-        "99.99.99.99/32",
-        "66.66.66.66/32"
-      ],
-       "static_ip_s2s" : [
-        "101.1.97.1/32",
-        "101.2.97.1/32"
-      ],
-      "static_ip_gre" : [
-        "102.1.97.1/32",
-        "102.2.97.1/32"
-      ],
-      "default_routes" : [
-        "0.0.0.0/0"
-      ],
-      "hub_aggregates": [
-      "25.1.1.0/24",
-       "27.1.1.0/24"
-     ],
-      "static_ip_peer" : [
-        "88.88.88.88/32",
-        "77.77.77.77/32"
-      ],
-      "static_check_leaks" : [
-        "88.88.88.88/32",
-        "77.77.77.77/32"
-      ],
-      "aggregate_routes_peer_vpnc" : [
-        "88.88.0.0/24",
-        "77.77.0.0/24"
-      ],
-      "config": {
-        "Interfaces": {
-          "Gateway Pool": [
-            {
-              "pool-name": "system_pool",
-              "startip": "200.200.200.2",
-              "endip": "200.200.200.255",
-              "default_data": true
-            }
-          ],
-          "VLANs": [
-            {
-              "name": "system",
-              "id": "3",
-              "ip assignment": "Gateway Pool",
-              "pool-name": "system_pool",
-             "Gateway Pool": 0,
-              "default_data": true
-            },
-            {
-              "name": "uplink1",
-              "id": "4094",
-              "ip assignment": "Dhcp",
-              "default_data": true
-            }
-          ],
-          "Ports": {
-            "ports": "0-1",
-            "config": [
-              {
-                "id": 0,
-                "vlan": 4094,
-                "type": "wan"
-              },
-              {
-                "id": 1,
-                "vlan": 164,
-                "type": "lan"
-              }
-            ]
-          }
-        },
-        "connected_vlans": {
-          "vlans": "3"
-        },
-        "WAN": {
-          "Uplink": [
-            {
-              "default_data": true,
-              "uplink_id": 4094,
-              "uplink_type": "INET",
-              "uplink_name": "uplink1_inet"
-            }
-          ],
-          "Routes": [
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 0
-              },
-              "forw_setting": "ipsec_tunnel_vpnc",
-              "destip": "54.164.95.28",
-              "destmask": "255.255.255.255",
-              "cost": "10"
-            },
-            {
-              "default_data": true,
-              "action": "add",
-              "name_meta": {
-                "vpnc": 0,
-                "uplink": 1
-              },
-              "forw_setting": "ipsec_tunnel_vpnc",
-              "destip": "54.164.96.28",
-              "destmask": "255.255.255.255",
-              "cost": "10"
-            }
-          ],
-          "System": {
-            "VLAN": "10"
-          },
-        "peer_system_ip": [
-          "100.100.140.1/32"
-        ],
-        "system_ip": [
-        "200.200.200.2/32"
-        ],
-          "Site_health": [
-            {
-              "connectivity_status": 1,
-              "dev_down": 0,
-              "dev_type": "SPOKE",
-              "dev_up": 1,
-              "site": "site1",
-              "site_avail": 100,
-              "tunnel_status": 1
-            }
-          ]
-        }
-      }
+    	"interfaces" :[
+    	{
+    	"name" : "lo1",
+		"ip_address": "52.1.1.1",
+		"net_mask" : "255.255.255.0"
+		},
+    	{
+    	"name" : "Ethernet1/0",
+			"ip_address": "192.168.2.2",
+			"net_mask" : "255.255.255.0"
+		}
+	],
+		"router_rip" :[
+    	{
+		"network": [
+		"52.1.1.0",
+		"192.168.2.0"
+		],
+		"peer_network":[
+		"50.1.1.0",
+		"51.1.1.0",
+		"192.168.1.0"
+		],
+		"peer_ip_ping":[
+		"50.1.1.1",
+		"51.1.1.1",
+		"192.168.1.1",
+		"192.168.1.2"
+		]
+		}
+	]	
     }
-  }
+  },
+  "show_commands":
+	[
+  "show version",
+  "show ip int bri",
+  "show run"
+  ]
  }
 
