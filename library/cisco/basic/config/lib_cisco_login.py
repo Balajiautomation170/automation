@@ -168,6 +168,18 @@ class Routerssh():
                 ip_add = False
         return ip_add
 
+    def wr_mem_cfg(self, login_det):
+        """
+        ssh login to devices : show commands
+        """
+        print ("#### Logged into device {}###".format(login_det["host"]))
+        router_conn = ConnectHandler(**login_det)
+        router_conn.enable()
+        output = router_conn.send_command("wr mem")
+        router_conn.disconnect()
+        print ("#### Logged out from device {}###".format(login_det["host"]))
+        return output
+
 
 if __name__ == "__main__":
     print("hi")

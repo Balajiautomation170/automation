@@ -82,3 +82,4 @@ class Test_login_to_devices():
             host_cfg = det["host"]
             self.cli_out.check_ip_route_out_non_exist(det, self.feature_config[host_cfg])
             self.cli_out.check_ping_out_non_exist(det, self.feature_config[host_cfg])
+            self.cli_out.wr_mem_output(det)

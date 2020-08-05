@@ -148,3 +148,15 @@ class Routerssh_output():
         else:
             print ("Failed to disabled IP address at {}".format(login_device["host"]))
             assert False
+
+    def wr_mem_output(self, login_device):
+        """
+        ssh login to devices output : show commands 
+        """
+        output_c = self.ssh_out.wr_mem_cfg(login_device)
+        if "[OK]" in output_c:
+            print ("wr mem at device {}".format(login_device["host"]))
+            assert True
+        else:
+            print ("Failed: to wr mem at device {}".format(login_device["host"]))
+            assert False
