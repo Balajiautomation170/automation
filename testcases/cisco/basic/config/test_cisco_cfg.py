@@ -4,6 +4,7 @@ import pytest
 import json
 import logging
 import time
+import bz2
 from library.cisco.basic.cfg_output.lib_cisco_login_output import Routerssh_output
 
 logging.basicConfig(level=logging.DEBUG)
@@ -20,7 +21,7 @@ class Test_login_to_devices():
         request.cls.comm_path = ""
         request.cls.feat_path = ""
         request.cls.comm_path = sys.path[1] + "/testcases/cisco/input_data/common_input.json"
-        request.cls.feat_path = sys.path[1] + "/testcases/cisco/input_data/feature_input.json"
+        request.cls.feat_path = sys.path[1] + "/testcases/cisco/input_data/feature_input_rip.json"
         request.cls.common_input_js = open(request.cls.comm_path, "r")
         request.cls.feature_input_js = open(request.cls.feat_path, "r")
         request.cls.common_input_dict = request.cls.common_input_js.read()
@@ -54,7 +55,7 @@ class Test_login_to_devices():
         for det in self.all_devices:
             host_cfg = det["host"]
             self.cli_out.enable_rip_out(det, self.feature_config[host_cfg])
-        time.sleep(15)
+        time.sleep(180)
         for det in self.all_devices:
             host_cfg = det["host"]
             self.cli_out.check_rip_database_out(det, self.feature_config[host_cfg])
